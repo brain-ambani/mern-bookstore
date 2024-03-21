@@ -50,6 +50,18 @@ app.get("/books", async (req, res) => {
   }
 });
 
+// Route to get a single book by ID
+app.get("/books/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const book = await Book.findById({ _id: id });
+
+    res.status(200).send(book);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: error.message });
+  }
+});
 mongoose
   .connect(MongoDB)
   .then(() => {
